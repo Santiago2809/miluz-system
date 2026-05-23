@@ -9,6 +9,8 @@
 - [6. System Entities (Conceptual Model)](#6-system-entities-conceptual-model)
 - [7. Business Rules](#7-business-rules)
 - [8. Edge Cases](#8-edge-cases)
+- [9. Tentative Project Roadmap](#9-tentative-project-roadmap)
+- [10. Technical Stack and Design Criteria](#10-technical-stack-and-design-criteria)
 
 ---
 
