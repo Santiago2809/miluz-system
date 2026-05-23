@@ -1,295 +1,457 @@
 # Miluz Management System (MVP)
 
-## Índice
-- [1. Contexto del negocio](#1-contexto-del-negocio)
-- [2. Objetivo del sistema](#2-objetivo-del-sistema)
-- [3. Alcance del MVP](#3-alcance-del-mvp)
-- [4. Roles del sistema](#4-roles-del-sistema)
-- [5. Flujo principal del negocio](#5-flujo-principal-del-negocio)
-- [6. Entidades del sistema (modelo conceptual)](#6-entidades-del-sistema-modelo-conceptual)
-- [7. Reglas de negocio](#7-reglas-de-negocio)
-- [8. Casos borde (edge cases)](#8-casos-borde-edge-cases)
+## Index
+- [1. Business Context](#1-business-context)
+- [2. System Objective](#2-system-objective)
+- [3. MVP Scope](#3-mvp-scope)
+- [4. System Roles](#4-system-roles)
+- [5. Main Business Flow](#5-main-business-flow)
+- [6. System Entities (Conceptual Model)](#6-system-entities-conceptual-model)
+- [7. Business Rules](#7-business-rules)
+- [8. Edge Cases](#8-edge-cases)
 
 ---
 
-## 1. Contexto del negocio
+## 1. Business Context
 
-Actualmente, la agencia de niñeras opera principalmente a través de WhatsApp como medio para coordinar servicios, comunicarse con niñeras y clientes, y llevar el control operativo del negocio. Aunque este enfoque ha funcionado hasta ahora, presenta varios problemas conforme el volumen de trabajo aumenta.
+Currently, the nanny agency operates mainly through WhatsApp as a means to coordinate services, communicate with nannies and clients, and maintain operational control of the business. Although this approach has worked so far, it presents several problems as the volume of work increases.
 
-La información clave del negocio (servicios realizados, pagos, disponibilidad de niñeras, historial de clientes) se encuentra dispersa en múltiples conversaciones, lo que dificulta:
-- Tener visibilidad clara de quién está trabajando y cuándo.
-- Consultar rápidamente el historial de servicios de una niñera o cliente.
-- Realizar cortes semanales de pagos sin revisar conversaciones pasadas.
-- Detectar errores, omisiones o servicios no registrados.
+Key business information (services performed, payments, nanny availability, client history) is scattered across multiple conversations, making it difficult to:
+- Have clear visibility of who is working and when.
+- Quickly consult the service history of a nanny or client.
+- Perform weekly payment closures without reviewing past conversations.
+- Detect errors, omissions, or unregistered services.
 
-La ausencia de un sistema centralizado genera dependencia del conocimiento manual de la administradora y aumenta el riesgo de errores operativos y financieros.
+The absence of a centralized system generates dependency on the manager's manual knowledge and increases the risk of operational and financial errors.
 
-Este proyecto busca **sistematizar la operación interna** de la agencia sin cambiar radicalmente la forma en que se comunican con clientes y niñeras, utilizando un sistema administrativo que funcione como fuente única de verdad.
-
----
-
-## 2. Objetivo del sistema
-
-El objetivo principal del sistema es proporcionar una plataforma administrativa interna que permita a la agencia gestionar su operación diaria de manera clara, ordenada y confiable.
-
-Los objetivos específicos del MVP son:
-- Centralizar la información de niñeras, clientes y servicios.
-- Tener visibilidad diaria y semanal de los servicios programados y realizados.
-- Facilitar el control y cálculo de pagos semanales a niñeras.
-- Reducir la dependencia de búsquedas manuales en conversaciones de WhatsApp.
-- Mantener un historial consultable de servicios y pagos.
-
-El sistema **no busca reemplazar WhatsApp como canal de comunicación**, sino complementar la operación con una herramienta estructurada para la gestión del negocio.
+This project seeks to **systematize the internal operation** of the agency without radically changing the way they communicate with clients and nannies, using an administrative system that functions as a single source of truth.
 
 ---
 
-## 3. Alcance del MVP
+## 2. System Objective
 
-### Incluye
-- Gestión de niñeras (registro, edición y estatus).
-- Gestión de clientes (información básica de contacto).
-- Registro y seguimiento de servicios (eventuales, planta y nocturnos).
-- Asignación de niñeras a servicios.
-- Control de pagos semanales a niñeras.
-- Registro de cobros a clientes.
-- Visualización básica de servicios diarios y semanales.
+The main objective of the system is to provide an internal administrative platform that allows the agency to manage its daily operation in a clear, orderly, and reliable manner.
 
-### No incluye (en esta etapa)
-- Portal para clientes.
-- Portal para niñeras.
-- Automatización de pagos bancarios.
-- Integración con la API de WhatsApp.
-- Sistema de calificaciones o reputación.
-- Facturación electrónica.
+The specific objectives of the MVP are:
+- Centralize nanny, client, and service information.
+- Have daily and weekly visibility of scheduled and completed services.
+- Facilitate the control and calculation of weekly payments to nannies.
+- Reduce dependency on manual searches in WhatsApp conversations.
+- Maintain a searchable history of services and payments.
 
-Estas funcionalidades podrán considerarse en fases posteriores del proyecto.
+The system **does not seek to replace WhatsApp as a communication channel**, but rather to complement the operation with a structured tool for business management.
 
 ---
 
-## 4. Roles del sistema
+## 3. MVP Scope
 
-El sistema contempla un uso interno con los siguientes roles:
+### Inclusions
+- Nanny management (registration, editing, and status).
+- Client management (basic contact information).
+- Service registration and tracking (occasional, full-time/placement, and overnight).
+- Assignment of nannies to services.
+- Control of weekly payments to nannies.
+- Registration of collections from clients.
+- Basic visualization of daily and weekly services.
+
+### Exclusions (at this stage)
+- Client portal.
+- Nanny portal.
+- Bank payment automation.
+- Integration with the WhatsApp API.
+- Rating or reputation system.
+- Electronic invoicing.
+
+These features may be considered in later phases of the project.
+
+---
+
+## 4. System Roles
+
+The system is intended for internal use with the following roles:
 
 ### Admin
-Rol principal, correspondiente a la dueña del negocio.
-- Acceso total al sistema.
-- Gestión completa de niñeras, clientes y servicios.
-- Visualización y control de información financiera.
-- Generación y cierre de cortes semanales de pagos.
-- Configuración de tarifas base.
+Main role, corresponding to the business owner.
+- Total access to the system.
+- Complete management of nannies, clients, and services.
+- Visualization and control of financial information.
+- Generation and closure of weekly payment periods.
+- Configuration of base rates.
 
-### Operadora
-Rol de apoyo administrativo.
-- Registro y edición de servicios.
-- Asignación de niñeras a servicios.
-- Consulta de información operativa.
-- Sin acceso completo a reportes financieros globales.
+### Operator
+Administrative support role.
+- Registration and editing of services.
+- Assignment of nannies to services.
+- Consultation of operational information.
+- No complete access to global financial reports.
 
-La separación de roles busca mantener el control financiero centralizado sin limitar la operación diaria.
-
----
-
-## 5. Flujo principal del negocio
-
-El sistema está diseñado para reflejar el flujo operativo real de la agencia, desde que se solicita un servicio hasta que se realiza el pago a la niñera. El flujo principal (happy path) es el siguiente:
-
-1. Un cliente solicita un servicio de niñera para una fecha y horario específicos.
-2. La administradora u operadora registra el servicio en el sistema.
-3. Se consulta la disponibilidad y el perfil de las niñeras para seleccionar una candidata.
-4. Se asigna una niñera al servicio y se establece la tarifa correspondiente.
-5. Se confirma el servicio con el cliente y la niñera a través de WhatsApp.
-6. El servicio se lleva a cabo en la fecha y horario acordados.
-7. Al finalizar el servicio, este se marca como completado en el sistema.
-8. Al final de la semana, se genera un corte semanal de pagos.
-9. Se realizan las transferencias a las niñeras y se registran como pagadas en el sistema.
-
-Este flujo representa el escenario ideal. El sistema también contempla excepciones como cancelaciones, cambios de horario o sustitución de niñeras, las cuales se registran para mantener la trazabilidad operativa.
+The separation of roles seeks to maintain centralized financial control without limiting daily operations.
 
 ---
 
-## 6. Entidades del sistema (modelo conceptual)
+## 5. Main Business Flow
 
-A continuación se describen las entidades principales del sistema a nivel conceptual. Esta sección define **qué representa cada entidad**, sin entrar aún en detalles técnicos o de implementación.
+The system is designed to reflect the actual operational flow of the agency, from the moment a service is requested until the payment is made to the nanny. The main flow (happy path) is as follows:
 
-### Niñera
-Representa a cada persona que presta servicios de cuidado infantil a través de la agencia.
+1. A client requests a nanny service for a specific date and time.
+2. The administrator or operator registers the service in the system.
+3. The availability and profile of the nannies are consulted to select a candidate.
+4. A nanny is assigned to the service and the corresponding rate is established.
+5. The service is confirmed with the client and the nanny via WhatsApp.
+6. The service takes place at the agreed date and time.
+7. Upon completion of the service, it is marked as completed in the system.
+8. At the end of the week, a weekly payment period closure is generated.
+9. Bank transfers are made to the nannies and they are registered as paid in the system.
 
-Contiene información como:
-- Datos personales básicos.
-- Información de contacto.
-- Zonas donde puede trabajar.
-- Habilidades o características relevantes.
-- Estatus operativo (activa, en pausa, etc.).
-- Disponibilidad semanal de trabajo.
-
----
-
-### Cliente
-Representa a las madres, padres o tutores que solicitan servicios de niñera.
-
-Contiene información como:
-- Nombre.
-- Teléfono de contacto.
-- Dirección o zona.
-- Notas relevantes para la atención del servicio.
+This flow represents the ideal scenario. The system also accounts for exceptions such as cancellations, schedule changes, or nanny substitutions, which are registered to maintain operational traceability.
 
 ---
 
-### Servicio
-Representa un turno o evento de trabajo en el que una niñera es asignada a un cliente.
+## 6. System Entities (Conceptual Model)
 
-Contiene información como:
-- Cliente solicitante.
-- Niñera asignada.
-- Fecha y horario del servicio.
-- Tipo de servicio (eventual, planta o nocturno).
-- Estatus del servicio (solicitado, asignado, confirmado, completado, cancelado).
-- Notas operativas.
+The main entities of the system are described below at a conceptual level. This section defines **what each entity represents**, without entering into technical or implementation details yet.
 
-Además, cada servicio almacena el **acuerdo económico específico** de ese caso:
-- Tarifa cobrada al cliente (por hora o monto acordado).
-- Tarifa pagada a la niñera (por hora o monto acordado).
-- Motivo opcional de ajuste (ej. distancia, urgencia, poca disponibilidad).
+### Nanny
+Represents each person who provides childcare services through the agency.
 
-El servicio es la entidad central del sistema, ya que conecta a niñeras, clientes y pagos.
+Contains information such as:
+- Basic personal data.
+- Contact information.
+- Areas where they can work.
+- Relevant skills or characteristics.
+- Operational status (active, on pause, etc.).
+- Weekly work availability.
 
 ---
 
-### Disponibilidad
-Representa los horarios en los que una niñera puede trabajar de forma recurrente.
+### Client
+Represents mothers, fathers, or guardians who request nanny services.
 
-Permite definir:
-- Días de la semana disponibles.
-- Rangos de horario por día.
-- Múltiples bloques de disponibilidad por día.
-
-La disponibilidad se utiliza como referencia para facilitar la asignación de servicios, pero no bloquea la operación de manera estricta.
-
----
-
-### Pago a niñera
-Representa el registro de pagos realizados a una niñera por los servicios prestados durante un periodo determinado.
-
-Contiene información como:
-- Periodo de pago (corte semanal).
-- Monto total a pagar.
-- Estatus del pago (pendiente, pagado).
-- Fecha de pago.
-- Referencia de la transferencia.
-
-El monto del pago se calcula a partir de los **servicios completados**, considerando la **tarifa acordada en cada servicio**, ya que el pago por hora puede variar según condiciones específicas.
+Contains information such as:
+- Name.
+- Contact phone number.
+- Address or area.
+- Relevant notes for the fulfillment of the service.
 
 ---
 
-### Cobro a cliente
-Representa el registro de los pagos realizados por los clientes a la agencia.
+### Service
+Represents a shift or work event in which a nanny is assigned to a client.
 
-Contiene información como:
-- Servicio asociado.
-- Monto cobrado.
-- Método de pago.
-- Estatus del cobro (pendiente, pagado).
+Contains information such as:
+- Requesting client.
+- Assigned nanny.
+- Date and time of the service.
+- Type of service (occasional, full-time/placement, or overnight).
+- Service status (requested, assigned, confirmed, completed, canceled).
+- Operational notes.
 
----
+In addition, each service stores the **specific economic agreement** for that case:
+- Rate charged to the client (per hour or agreed amount).
+- Rate paid to the nanny (per hour or agreed amount).
+- Optional reason for adjustment (e.g., distance, urgency, low availability).
 
-### Tarifas
-Representa las tarifas base utilizadas por la agencia como referencia para calcular el costo de los servicios.
-
-Contiene información como:
-- Tipo de servicio.
-- Tarifa base por hora para el cliente.
-- Tarifa base por hora para la niñera.
-- Reglas generales de aplicación.
-
-Las tarifas base se utilizan para autocompletar valores al registrar un servicio, pero cada servicio puede tener **tarifas específicas acordadas**, tanto para el cobro al cliente como para el pago a la niñera.
+The service is the central entity of the system, as it connects nannies, clients, and payments.
 
 ---
 
-## 7. Reglas de negocio
+### Availability
+Represents the schedules during which a nanny can work on a recurring basis.
 
-Las siguientes reglas definen el comportamiento esperado del sistema y reflejan la forma en que la agencia opera actualmente. Estas reglas deben respetarse durante el diseño y la implementación del sistema.
+Allows defining:
+- Available days of the week.
+- Time ranges per day.
+- Multiple blocks of availability per day.
 
-### Operación general
-- El sistema es de uso interno y administrativo.
-- WhatsApp continúa siendo el principal canal de comunicación con clientes y niñeras.
-- El sistema actúa como la fuente central de información del negocio.
-
-### Servicios
-- Todo servicio debe estar asociado a un cliente.
-- Un servicio puede estar asociado a una niñera o permanecer sin asignar temporalmente.
-- Un servicio puede ser de tipo eventual, planta o nocturno.
-- Un servicio puede cambiar de estatus durante su ciclo de vida.
-- Un servicio cancelado no genera pago a la niñera.
-- Un servicio completado es elegible para ser considerado en el corte semanal de pagos.
-- Las horas reales trabajadas pueden diferir de las horas inicialmente registradas y deben poder ajustarse.
-
-### Disponibilidad
-- La disponibilidad de una niñera representa una referencia para la asignación de servicios.
-- La disponibilidad no bloquea de forma estricta la creación o asignación de servicios.
-- Una niñera puede tener múltiples bloques de disponibilidad en un mismo día.
-- La disponibilidad puede ser modificada sin afectar servicios ya registrados.
-
-### Tarifas
-- Existen tarifas base según el tipo de servicio (referencia para autocompletar).
-- El cobro al cliente y el pago a la niñera pueden variar por servicio.
-- El sistema debe permitir sobrescribir (override) la tarifa base en un servicio específico.
-- Cuando se sobrescribe una tarifa en un servicio, debe poder registrarse un motivo opcional (ej. distancia, urgencia, poca disponibilidad).
-- El sistema debe almacenar en cada servicio el acuerdo final:
-  - tarifa cobrada al cliente
-  - tarifa pagada a la niñera
-
-### Pagos a niñeras
-- Los pagos a niñeras se realizan de forma semanal.
-- El corte semanal agrupa los servicios completados dentro del periodo correspondiente.
-- Un servicio solo puede pertenecer a un corte semanal.
-- Un pago marcado como realizado no debe modificarse sin autorización administrativa.
-- Los pagos se realizan mediante transferencia bancaria.
-- El corte semanal debe calcularse usando la **tarifa pagada a la niñera registrada en cada servicio**, no la tarifa base ni una tarifa “actual” de la niñera.
-- Si un servicio ya fue incluido en un corte marcado como pagado, sus montos no deben cambiar sin un ajuste administrativo explícito.
-
-
-### Cobros a clientes
-- Los cobros a clientes pueden realizarse antes o después del servicio.
-- Un servicio puede tener su cobro pendiente incluso si ya fue completado.
-- El estatus de cobro debe poder actualizarse independientemente del estatus del servicio.
+Availability is used as a reference to facilitate service assignment, but it does not strictly block operations.
 
 ---
 
-## 8. Casos borde (edge cases)
+### Nanny Payment
+Represents the record of payments made to a nanny for services rendered during a specific period.
 
-El sistema debe contemplar y permitir el manejo de situaciones excepcionales que ocurren en la operación real del negocio.
+Contains information such as:
+- Payment period (weekly closure).
+- Total amount to pay.
+- Payment status (pending, paid).
+- Payment date.
+- Transfer reference.
 
-### Cancelaciones
-- Un servicio puede ser cancelado antes de realizarse.
-- Un servicio cancelado no debe incluirse en cortes de pago.
-- La cancelación debe quedar registrada para fines históricos.
+The payment amount is calculated from the **completed services**, considering the **agreed rate in each service**, since the hourly payment may vary depending on specific conditions.
 
-### Cambios de última hora
-- Una niñera puede cancelar su participación el mismo día del servicio.
-- Un servicio puede ser reasignado a otra niñera.
-- El sistema debe permitir actualizar la niñera asignada sin perder el historial del servicio.
+---
 
-### Servicios nocturnos
-- Un servicio puede iniciar en un día y finalizar en el siguiente.
-- El cálculo de horas trabajadas debe contemplar cruces de medianoche.
-- Los servicios nocturnos pueden tener tarifas especiales.
+### Client Collection
+Represents the record of payments made by clients to the agency.
 
-### Horas extra
-- Un servicio puede extenderse más allá del horario originalmente pactado.
-- Las horas adicionales deben poder registrarse manualmente.
-- El monto final del servicio debe reflejar las horas reales trabajadas.
+Contains information such as:
+- Associated service.
+- Amount charged.
+- Payment method.
+- Collection status (pending, paid).
 
-### Pagos y cobros atrasados
-- Una niñera puede recibir su pago en una fecha posterior al corte semanal.
-- Un cliente puede pagar después de que el servicio haya sido completado.
-- El sistema debe permitir identificar pagos y cobros pendientes.
+---
 
-### Errores humanos
-- Un servicio puede registrarse con información incorrecta.
-- El sistema debe permitir correcciones manteniendo coherencia operativa.
-- Las notas internas deben facilitar la explicación de ajustes o cambios realizados.
+### Rates
+Represents the base rates used by the agency as a reference to calculate the cost of services.
 
-### Tarifas especiales por servicio
-- Puede negociarse un pago diferente a la niñera para un servicio específico (ej. “si vas a este servicio te lo pago en 100”), por razones como distancia, urgencia o poca disponibilidad.
-- El sistema debe permitir registrar la tarifa especial y, opcionalmente, el motivo del ajuste.
-- El corte semanal debe reflejar el pago acordado para ese servicio.
+Contains information such as:
+- Type of service.
+- Base hourly rate for the client.
+- Base hourly rate for the nanny.
+- General application rules.
+
+Base rates are used to auto-complete values when registering a service, but each service can have **specific agreed rates**, both for the charge to the client and the payment to the nanny.
+
+---
+
+## 7. Business Rules
+
+The following rules define the expected behavior of the system and reflect how the agency currently operates. These rules must be respected during the design and implementation of the system.
+
+### General Operation
+- The system is for internal and administrative use.
+- WhatsApp continues to be the main communication channel with clients and nannies.
+- The system acts as the central source of business information.
+
+### Services
+- Every service must be associated with a client.
+- A service can be associated with a nanny or remain temporarily unassigned.
+- A service can be of type occasional, full-time/placement, or overnight.
+- A service can change status during its lifecycle.
+- A canceled service does not generate payment to the nanny.
+- A completed service is eligible to be considered in the weekly payment period closure.
+- The actual hours worked can differ from the hours initially registered and must be adjustable.
+
+### Availability
+- A nanny's availability represents a reference for service assignment.
+- Availability does not strictly block the creation or assignment of services.
+- A nanny can have multiple availability blocks on the same day.
+- Availability can be modified without affecting already registered services.
+
+### Rates
+- Base rates exist according to the type of service (reference for auto-completion).
+- The charge to the client and the payment to the nanny can vary per service.
+- The system must allow overwriting (override) the base rate in a specific service.
+- When a rate is overwritten in a service, an optional reason must be recordable (e.g., distance, urgency, low availability).
+- The system must store the final agreement in each service:
+  - rate charged to the client
+  - rate paid to the nanny
+
+### Payments to Nannies
+- Payments to nannies are made on a weekly basis.
+- The weekly closure groups completed services within the corresponding period.
+- A service can only belong to one weekly closure.
+- A payment marked as completed must not be modified without administrative authorization.
+- Payments are made via bank transfer.
+- The weekly closure must be calculated using the **rate paid to the nanny registered in each service**, not the base rate nor a nanny's "current" rate.
+- If a service was already included in a closure marked as paid, its amounts must not change without an explicit administrative adjustment.
+
+### Collections from Clients
+- Collections from clients can be made before or after the service.
+- A service can have its collection pending even if it has already been completed.
+- The collection status must be updatable independently of the service status.
+
+---
+
+## 8. Edge Cases
+
+The system must account for and allow the handling of exceptional situations that occur in the actual operation of the business.
+
+### Cancellations
+- A service can be canceled before it takes place.
+- A canceled service must not be included in payment closures.
+- The cancellation must remain registered for historical purposes.
+
+### Last-Minute Changes
+- A nanny can cancel their participation on the same day of the service.
+- A service can be reassigned to another nanny.
+- The system must allow updating the assigned nanny without losing the service history.
+
+### Overnight Services
+- A service can start on one day and end on the next.
+- The calculation of hours worked must account for midnight crossings.
+- Overnight services can have special rates.
+
+### Overtime
+- A service can extend beyond the schedule originally agreed upon.
+- Additional hours must be recordable manually.
+- The final amount of the service must reflect the actual hours worked.
+
+### Overdue Payments and Collections
+- A nanny can receive their payment at a date later than the weekly closure.
+- A client can pay after the service has been completed.
+- The system must allow identifying pending payments and collections.
+
+### Human Errors
+- A service can be registered with incorrect information.
+- The system must allow corrections while maintaining operational consistency.
+- Internal notes should facilitate the explanation of adjustments or changes made.
+
+### Special Rates per Service
+- A different payment to the nanny can be negotiated for a specific service (e.g., "if you go to this service I will pay you 100"), for reasons such as distance, urgency, or low availability.
+- The system must allow registering the special rate and, optionally, the reason for the adjustment.
+- The weekly closure must reflect the agreed payment for that service.
+
+---
+
+## 9. Tentative Project Roadmap
+
+The development of the system is planned incrementally, prioritizing operational stability and business visibility first. This roadmap is **tentative** and can be adjusted as the real needs of daily use are validated.
+
+---
+
+### Phase 1: Internal Administrative MVP
+**Objective:** Centralize the basic operation of the business and eliminate dependency on historical conversations.
+
+Inclusions:
+- Nanny management (registration, editing, status).
+- Client management.
+- Service registration and tracking.
+- Assignment of nannies to services.
+- Weekly availability handling.
+- Base rate registration.
+- Specific rate registration per service.
+- Weekly closure of payments to nannies.
+- Registration of collections from clients.
+- Visualization of daily and weekly services.
+
+Expected Result:
+- Clear visibility of the operation.
+- Searchable history of services and payments.
+- Reduction of errors in weekly payments.
+
+---
+
+### Phase 2: Operational Optimization
+**Objective:** Reduce operational friction and improve the administrative experience.
+
+Possible Improvements:
+- Templates for recurring services (full-time/placements).
+- Quick duplication of services.
+- Advanced filters by nanny, client, date, and status.
+- Simple reports of income, payments, and commissions.
+- Data export (Excel / PDF).
+- Registration of incidents or post-service notes.
+
+Expected Result:
+- Less time spent on repetitive tasks.
+- Better control and analysis of the operation.
+
+---
+
+### Phase 3: Controlled External Interaction
+**Objective:** Reduce administrative load without losing control.
+
+Possible Improvements:
+- Web form for client requests.
+- Automatic registration of services from forms.
+- Manual confirmations from the administrative panel.
+- Direct links to WhatsApp from the system.
+
+Expected Result:
+- More structured input data.
+- Fewer errors in information capture.
+
+---
+
+### Phase 4: Scalability and Automation
+**Objective:** Prepare the system for growth and greater automation.
+
+Possible Improvements:
+- Nanny portal (view assigned services, history).
+- Client portal.
+- Automatic notifications (email / WhatsApp).
+- Partial automation of payments.
+- Advanced performance and operation metrics.
+
+Expected Result:
+- Greater autonomy for external users.
+- Significant reduction in manual administrative workload.
+
+---
+
+This roadmap serves as a strategic guide and not as a rigid implementation commitment. Each phase must be validated based on the actual use of the system and business needs.
+
+---
+
+## 10. Technical Stack and Design Criteria
+
+This section describes the chosen technical stack and the criteria that will guide the implementation. It can be adjusted as the project progresses, but the focus is to maintain operational simplicity and data consistency.
+
+---
+
+### 10.1 Technical Stack (Chosen)
+
+The system will be an internal administrative web application with separate frontend and backend.
+
+**Frontend**
+- React + TypeScript
+- Vite (bundler)
+- UI/Styles: (pending definition; possible TailwindCSS or another lightweight library)
+- API Consumption: REST (HTTP)
+
+**Backend**
+- Python 3.12 + FastAPI
+- REST API
+- Validation: Pydantic v2 (built-in)
+- ORM: SQLAlchemy 2.0
+- Migrations: Alembic
+- API Documentation: Swagger / ReDoc (auto-generated, built-in)
+- Server: Uvicorn
+
+**Database**
+- PostgreSQL
+
+**Authentication and Authorization**
+- Authentication with credentials (email/user + password)
+- Authorization by roles:
+  - Admin (total control)
+  - Operator (daily operation with restrictions)
+- Recommended Strategy: JWT (access token) + refresh token (as needed)
+
+**Local Development**
+- Docker + Docker Compose (all services containerized)
+- Single `docker compose up` runs entire stack locally
+
+**Infra / Deployment (Tentative)**
+- Frontend: Vercel or Netlify
+- Backend: Railway / Render / Fly.io (or VPS)
+- Managed PostgreSQL (according to the chosen provider)
+- Environment variables for configuration per environment (dev/staging/prod)
+
+---
+
+### 10.2 Design Criteria
+
+**Product-Operation Approach**
+- The system centralizes critical business data (services, payments, history).
+- WhatsApp is maintained as a communication channel, but is not considered a source of truth.
+
+**Consistency and Traceability**
+- The system must maintain a searchable history of services, collections, and payments.
+- Agreed amounts are "frozen" per service:
+  - rate charged to the client (per hour or final amount)
+  - rate paid to the nanny (per hour or final amount)
+- The weekly payment closure is calculated using the amounts registered in the completed services, not a global base rate.
+- Each service must be traceable to the weekly closure in which it was paid (if applicable).
+
+**Change-Oriented Design**
+- The data model must allow incorporating future rules (discounts for full-time/placements, surcharges for urgency, multiple children, etc.) without redoing the main structure.
+- A modular design in the backend is prioritized (FastAPI routers per domain: nannies, clients, services, payments, auth).
+
+**Security and Privacy**
+- Restricted access by roles and minimum necessary permissions.
+- Personal data (phone numbers, addresses, notes) must be treated as sensitive information.
+- Avoid exposing financial information to unauthorized roles.
+- Best practices: password hashing, input validation, basic rate limiting (if applicable), configured CORS.
+
+**Simplicity and UX**
+- Registering a service must be fast and with clear validations.
+- Availability is used as a reference to facilitate assignments, without blocking operations.
+- The system must prioritize simple flows (create service, assign nanny, mark completed, generate weekly closure).
+
+**Basic Observability**
+- Logs of relevant actions (creation/editing/cancellation of services, closure of weekly periods).
+- Consistent error handling (clear and traceable messages).
+- API response conventions (HTTP codes + structured errors).
